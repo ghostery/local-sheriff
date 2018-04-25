@@ -5,10 +5,10 @@ While you normally browse the internet it works in the background and helps you 
 
 ## Motivation:
 
-It has become a norm for a websites to load enormous amounts of third-party resources on their webpages. While the websites have genuine use cases like analytics, measure app performance, audience measurements, goal conversions, content recommendation, social sharing , CDNs etc.
+It has become a norm for websites to load enormous amounts of third-party resources on their webpages. While the websites have genuine use cases like analytics, measure app performance, audience measurements, goal conversions, content recommendation, social sharing , CDNs etc.
 
 But the way these third-parties are implemented & used by websites they are often not privacy proof. 
-Sensitive user information like passwords, email-ids, name, order IDs, date-of-birth and other PII is being leaked in abundance to whole bunch of third-parties. 
+Sensitive user information like passwords, email-ids, name, order IDs, date-of-birth and other PII is leaked in abundance to whole bunch of third-parties. 
 
 The issues that Local Sheriff aims to highlight:
 1. Was the user aware and gave consent to share this sensitive information with this these parties?
@@ -31,10 +31,11 @@ The issues that Local Sheriff aims to highlight:
 
 ### After you install Local Sheriff it starts to observes browser network traffic silently for the following:
 1. Web pages (First party) loading third-party resources.
-2. URLs being leaked by a first-party to third-party. Via HTTP header like Referrer
+2. URLs being leaked by a first-party to third-party. Via HTTP header like Referrer and/or via query parameters third-parties.
 3. Data being sent to third-parties in GET request & POST request.
 4. Information being entered in forms.
 5. As soons as Local Sheriff detects that a URL has been shared with a third-party, it issues an anonymous `GET` request to that page again to simulate what information can be accessed only based on the URL without user-cookies, session etc.
+6. HTML content of page fetched after step-5 is also saved for inspection.
 
 ### The user can at any time visit the control-panel page by clicking the icon in the address bar:
 1.	Lists if any of the information entered in the input fields is shared with the third-parties.
