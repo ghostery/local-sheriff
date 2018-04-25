@@ -40,7 +40,7 @@ The issues that Local Sheriff aims to highlight:
 1.	Lists if any of the information entered in the input fields is shared with the third-parties.
 2.	User can query text, cookie values etc and it will list down: Which websites leaked this query to how many third-parties and who they belong to.
 
- Local Sheriff runs completely on users’ browser. 
+ DEMO: [Example of how information entered in forms can be leaked.](https://streamable.com/yl3qq)
 
 ## Data Sources:
 
