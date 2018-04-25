@@ -71,7 +71,17 @@ Alternatively:
 - Enable developer mode.
 - Drag and drop the CRX file.
 
-Please note: We are working on making the extension available from Firefox, Chrome & Opera stores.
+Once you have it running, visit different pages like:
+
+- Check some e-commerce order status
+- Fill some forms
+- Try reset password
+
+Check the control center to see what information has been shared.
+
+Please note: 
+
+- Local Sheriff will not work optimally if you have some tools like ad-blocking, Ghostery, privacy-badger installed.
 
 ## Examples of data leaks:
 - [Emirates](https://medium.freecodecamp.org/how-airlines-dont-care-about-your-privacy-case-study-emirates-com-6271b3b8474b)
