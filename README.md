@@ -134,4 +134,9 @@ Thanks for your interest in contributing to *Local Sheriff*! There are many ways
 - Extensions in Chrome by default do not work in incognito mode. While, in Firefox they are enabled with limited functionailty. It would worth checking and deciding what should be the desired behaviour.
 
 ## Contributors:
+
 Thanks to [@solso](https://twitter.com/solso) [@Pythux](https://twitter.com/Pythux) [@ecnmst](https://github.com/ecnmst) for their valuable inputs and being early adopters of this tool. 
+
+#### Lead Developer:
+
+Konark Modi: [@konarkmodi](https://twitter.com/konarkmodi)
