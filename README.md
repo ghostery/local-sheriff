@@ -106,7 +106,8 @@ Please note:
 
 ## Examples of data leaks:
 - [Emirates](https://medium.freecodecamp.org/how-airlines-dont-care-about-your-privacy-case-study-emirates-com-6271b3b8474b)
-- [HackerOne](https://twitter.com/konarkmodi/status/978640867627098118)
+- [HackerOne](https://twitter.com/konarkmodi/status/978640867627098118) :[Video](https://streamable.com/yl3qq)
+- [Shadow profile: Can Facebook track you if even you have never visited it?](https://streamable.com/yzgz5)
 - Spotify leaks & fixes.
 - Lufthansa
 - GA-DoubleClick Cookie sync
