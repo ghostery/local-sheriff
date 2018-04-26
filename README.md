@@ -13,7 +13,9 @@ It has become a norm for websites to load enormous amounts of third-party resour
 But the way these third-parties are implemented & used by websites they are often not privacy proof. 
 Sensitive user information like passwords, email-ids, name, order IDs, date-of-birth and other PII is leaked in abundance to whole bunch of third-parties. 
 
-The issues that Local Sheriff aims to highlight:
+ ![cover image](docs/images/companies-leaking-private-info.png)
+
+**The issues that Local Sheriff aims to highlight:**
 1. Was the user aware and gave consent to share this sensitive information with this these parties?
 2. Why do these third parties need to receive this information?
 3. Is website owner even aware that sensitive user information is being leaked to these third parties?
@@ -23,14 +25,23 @@ The issues that Local Sheriff aims to highlight:
 ## How Local Sheriff identifies leaks:
 
 ### While you are interacting with the webpages, the PII could be:
-1.	In the URL (Eg: booking reference, Lastname, email, twitter handle etc.)
-2.	On page content (Eg: capability URLs, which contain sensitive information but are not behind log in)
-3.	The values entered in forms.
+
+**1.	In the URL (Eg: booking reference, Lastname, email, twitter handle etc.)**
+   ![cover image](docs/images/sensitive-data-in-url.png)
+   
+**2.	On page content (Eg: capability URLs, which contain sensitive information but are not behind log in)**
+   ![cover image](docs/images/senstive-data-on-page.png)
+   
+**3.	The values entered in forms**
 
 ### These URL’s can be shared with the third-parties:
-1.	Via HTTP Headers like Referrer.
-2.	Via query parameters
-3.	Browser features like Chrome browser – Translate and more.
+**1.	Via HTTP Headers like Referrer**
+   ![cover image](docs/images/data-shared-in-ref.png)
+   
+**2.	Via query parameters**
+   ![cover image](docs/images/data-shared-query-parameters.png)
+   
+**3.	Browser features like Chrome browser – Translate and more.**
 
 ### After you install Local Sheriff it starts to observes browser network traffic silently for the following:
 1. Web pages (First party) loading third-party resources.
@@ -41,10 +52,14 @@ The issues that Local Sheriff aims to highlight:
 6. HTML content of page fetched after step-5 is also saved for inspection.
 
 ### The user can at any time visit the control-panel page by clicking the icon in the address bar:
+![cover image](docs/images/control-panel.png)
+
 1.	Lists if any of the information entered in the input fields is shared with the third-parties.
 2.	User can query text, cookie values etc and it will list down: Which websites leaked this query to how many third-parties and who they belong to.
+![cover image](docs/images/cookie-synching-in-action.png)
 
- DEMO: [Example of how information entered in forms can be leaked.](https://streamable.com/yl3qq)
+
+ **DEMO:** [Example of how information entered in forms can be leaked.](https://streamable.com/yl3qq)
 
 ## Data Sources:
 
