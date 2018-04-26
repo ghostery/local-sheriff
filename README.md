@@ -109,12 +109,11 @@ Thanks for your interest in contributing to *Local Sheriff*! There are many ways
 5. Ability for the users to see which third-parties can track them across them across web and also de-anonymize them.
 6. HAR support: Make core API which stores data and provides search interface generic so that this tool can be used outside the browser to inspect traffic outside of browser.
 
-
-## Contributors:
-Thanks to [@solso](https://twitter.com/solso) [@Pythux](https://twitter.com/Pythux) [@ecnmst](https://github.com/ecnmst) for their valuable inputs and being early adopters of this tool. 
-
 ## PRIVACY & SECURITY
 
 - Local Sheriff does not transmit any data over the internet. All data needed for analysis remains on your local hard disk drive at all times. However, the data saved by this extension is NOT encrypted, so any data you save remains in the clear, although it will remain on your hard drive and only someone who knows where to look and has physical access to your hard drive would be able to access it. There is a plan in the roadmap to delete the data when user clears history.
 
 - Extensions in Chrome by default do not work in incognito mode. While, in Firefox they are enabled with limited functionailty. It would worth checking and deciding what should be the desired behaviour.
+
+## Contributors:
+Thanks to [@solso](https://twitter.com/solso) [@Pythux](https://twitter.com/Pythux) [@ecnmst](https://github.com/ecnmst) for their valuable inputs and being early adopters of this tool. 
