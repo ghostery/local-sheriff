@@ -1,7 +1,10 @@
+ ![Local shreiff Logo](docs/images/sheriff-icon-doc.png)
 # Local-sheriff
 
 Think of Local sheriff as a reconnaissance tool in your browser. 
 While you normally browse the internet it works in the background and helps you to identify what sensitive information(PII) about you is being shared / leaked to which all third-parties.
+
+ ![cover image](docs/images/cover-image.png)
 
 ## Motivation:
 
