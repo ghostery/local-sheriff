@@ -27,19 +27,24 @@ Sensitive user information like passwords, email-ids, name, order IDs, date-of-b
 ### While you are interacting with the webpages, the PII could be:
 
 **1.	In the URL (Eg: booking reference, Lastname, email, twitter handle etc.)**
+
    ![cover image](docs/images/sensitive-data-in-url.png)
 
 **2.	On page content (Eg: capability URLs, which contain sensitive information but are not behind log in)**
+
    ![cover image](docs/images/senstive-data-on-page.png)
 
 **3.	The values entered in forms**
 
 ### These URL’s can be shared with the third-parties:
+
 **1.	Via HTTP Headers like Referrer**
-   ![cover image](docs/images/data-shared-in-ref.png)
+
+    ![cover image](docs/images/data-shared-in-ref.png)
 
 **2.	Via query parameters**
-   ![cover image](docs/images/data-shared-query-parameters.png)
+ 
+     ![cover image](docs/images/data-shared-query-parameters.png)
 
 **3.	Browser features like Chrome browser – Translate and more.**
 
@@ -110,7 +115,7 @@ Please note:
 - Foodora
 
 ## App store links:
-In progress.
+- Chrome store - [Local Sheriff](https://chrome.google.com/webstore/detail/local-sheriff/ckmkiloofgfalfdhcfdllaaacpjjejeg)
 
 ## Contributing
 
