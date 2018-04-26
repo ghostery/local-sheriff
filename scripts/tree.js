@@ -78,6 +78,11 @@ function generateCardTP(row, query) {
   card += `<div class="card" style="overflow-wrap:break-word;">`;
   card += `<div class="card-body">`;
   card += `<h4>Also found ${query} in third-party urls courtesy ${row.details.fpdetails.tracker_host}: </h4><div class="card-title leaky-url"><b>${row.leakyTP}</b></div><br/>`;
+  if (row.cookie) {
+    card += `<span class="badge badge-warning">Cookie</span>${row.cookie}<br/>`;
+  } else {
+    card += `<span class="badge badge-warning">No cookie detected.</span>`;
+  }
   card += `</div>`;
   card += `</div></div></div></div>`;
   return card;

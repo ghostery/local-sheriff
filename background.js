@@ -41,6 +41,8 @@ let refHTML = {};
 const inputFields = {};
 const inputFieldsCache = {};
 
+let cookieTable = {};
+
 Object.keys(trackerData).forEach(e => {
 	trackerData[e].hosts.forEach(y => {
 		trackerDomains.push(y);
@@ -183,7 +185,8 @@ function checkPresence(str) {
 			// console.log(" Information leaked via Third-party URL >>>>" + item);
 			const o = {
 				leakyTP: item,
-				details: thirdPartyFP[item]
+				details: thirdPartyFP[item],
+				cookie: cookieTable[item]
 			}
 			leakyTPs.push(o);
 			const com = thirdPartyFP[item].tpdetails.company_name;
@@ -195,6 +198,25 @@ function checkPresence(str) {
 		}
 	}
 
+	// Let's also check cookies for this detail.
+	Object.keys(cookieTable).forEach( item => {
+		const _idx = cookieTable[item].toLowerCase().indexOf(str.toLowerCase());
+		if (_idx > -1 && thirdPartyFP[item]) {
+			// console.log(" Information leaked via Third-party URL >>>>" + item);
+			const o = {
+				leakyTP: item,
+				details: thirdPartyFP[item],
+				cookie: cookieTable[item]
+			}
+			leakyTPs.push(o);
+			const com = thirdPartyFP[item].tpdetails.company_name;
+			if (!resultTable.hasOwnProperty(com)) resultTable[com] = {'leaks': 0, websites: []};//{'leaks':0, 'website': thirdPartyFP[item].fpdetails.tracker_host};
+			if (resultTable[com]['websites'].indexOf(thirdPartyFP[item].fpdetails.tracker_host) === -1) {
+				resultTable[com]['leaks'] += 1;
+				resultTable[com]['websites'].push(thirdPartyFP[item].fpdetails.tracker_host);
+			}
+		}
+	})
 
 	const ls = leakySummary([leakyURLs, leakyPages, leakyTPs]);
 	return {
@@ -456,7 +478,6 @@ function getReferrer(request) {
 // This the where all requests are passed and check for third-parties start to happen.
 function onSendHeadersListeners(request) {
 	try {
-		console.log(request);
 		let initiatorURL = '';
 		if (request.initiator) {
 			initiatorURL = request.initiator;
@@ -530,6 +551,14 @@ function onSendHeadersListeners(request) {
 				addThirdPartyFP(decode(request.url), initiatorURL, companyDetailsTP, companyDetailsFP);
 				savetpList(decode(request.url));
 
+				// Let's keep track of the cookies too.
+				// Helps find cases like Facebook.
+				request.requestHeaders.forEach( header => {
+					if (header.name.toLowerCase() === 'cookie') {
+						cookieTable[decode(request.url)] = header.value;
+						saveCookies(decode(request.url), header.value);
+					}
+				});
 			} else {
 				console.log(">> Companies are same >>> " + companyDetailsTP.company_name + ' >>>> ' + companyDetailsFP.company_name)
 			}
@@ -545,7 +574,6 @@ function onSendHeadersListeners(request) {
 function onMessageListener(info, sender, sendResponse){
 
 	// Only receive messages from control-panel.
-	console.log(sender.url);
 	if (sender.url === controlPanelURL) {
 
 		// Is it a recording signal.?

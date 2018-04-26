@@ -3,6 +3,8 @@ const updateTime = 1 * 60 * 1000;
 
 // Create database.
 const db = new Dexie('localSheriff');
+const dbCookie = new Dexie('localSheriffCookieTable');
+
 db.version(1).stores({
     reftp: '++id, ref, tp',
     refhtml: '++id, ref, html',
@@ -12,10 +14,25 @@ db.version(1).stores({
     tpURLFP: '++id, tpurl, details'
 });
 
+// Save cookies
+dbCookie.version(1).stores({
+	cookietable: '++id, url, details'
+});
+
 db.open().then(function (db) {
     // Database opened successfully
     console.log(" DB connection successful.");
     loadFromDatabase();
+}).catch (function (err) {
+    // Error occurred
+    console.log("Error occurred while opening DB." + err);
+});
+
+// Access cookie table:
+dbCookie.open().then(function (dbCookie) {
+    // Database opened successfully
+    console.log(" DB connection successful.");
+    loadCookiesFromDatabase();
 }).catch (function (err) {
     // Error occurred
     console.log("Error occurred while opening DB." + err);
@@ -61,6 +78,11 @@ function saveInputFieldsCache(value, summary) {
 function savetpURLFP(tpurl, details) {
 	db.tpURLFP.add({tpurl: tpurl, details: details});
 }
+
+function saveCookies(url, details) {
+	dbCookie.cookietable.add({url: url, details: details});
+}
+
 function loadFromDatabase() {
 	db.reftp.each(row => {addToDict(row.ref, row.tp, 'load')});
 
@@ -87,5 +109,11 @@ function loadFromDatabase() {
 	console.log(">>>");
 	db.tpURLFP.each( row => {
 		thirdPartyFP[row.tpurl] = row.details;
+	});
+}
+
+function loadCookiesFromDatabase() {
+	dbCookie.cookietable.each( row => {
+		cookieTable[row.url] = row.details;
 	});
 }
