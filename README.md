@@ -1,7 +1,7 @@
  ![Local shreiff Logo](docs/images/sheriff-icon-doc.png)
 # Local-sheriff
 
-Think of Local sheriff as a reconnaissance tool in your browser. 
+Think of Local sheriff as a reconnaissance tool in your browser.
 While you normally browse the internet it works in the background and helps you to identify what sensitive information(PII) about you is being shared / leaked to which all third-parties.
 
  ![cover image](docs/images/cover-image.png)
@@ -10,8 +10,8 @@ While you normally browse the internet it works in the background and helps you 
 
 It has become a norm for websites to load enormous amounts of third-party resources on their webpages. While the websites have genuine use cases like analytics, measure app performance, audience measurements, goal conversions, content recommendation, social sharing , CDNs etc.
 
-But the way these third-parties are implemented & used by websites they are often not privacy proof. 
-Sensitive user information like passwords, email-ids, name, order IDs, date-of-birth and other PII is leaked in abundance to whole bunch of third-parties. 
+But the way these third-parties are implemented & used by websites they are often not privacy proof.
+Sensitive user information like passwords, email-ids, name, order IDs, date-of-birth and other PII is leaked in abundance to whole bunch of third-parties.
 
  ![cover image](docs/images/companies-leaking-private-info.png)
 
@@ -28,19 +28,19 @@ Sensitive user information like passwords, email-ids, name, order IDs, date-of-b
 
 **1.	In the URL (Eg: booking reference, Lastname, email, twitter handle etc.)**
    ![cover image](docs/images/sensitive-data-in-url.png)
-   
+
 **2.	On page content (Eg: capability URLs, which contain sensitive information but are not behind log in)**
    ![cover image](docs/images/senstive-data-on-page.png)
-   
+
 **3.	The values entered in forms**
 
 ### These URL’s can be shared with the third-parties:
 **1.	Via HTTP Headers like Referrer**
    ![cover image](docs/images/data-shared-in-ref.png)
-   
+
 **2.	Via query parameters**
    ![cover image](docs/images/data-shared-query-parameters.png)
-   
+
 **3.	Browser features like Chrome browser – Translate and more.**
 
 ### After you install Local Sheriff it starts to observes browser network traffic silently for the following:
@@ -85,10 +85,8 @@ Please note Firefox will remove the extension on restart.
 ```
 
 Alternatively:
-- You can download a [CRX](#):
-- Open chrome and visit chrome://extensions.
-- Enable developer mode.
-- Drag and drop the CRX file.
+- You can install from Chrome store : [Local Sheriff](https://chrome.google.com/webstore/detail/local-sheriff/ckmkiloofgfalfdhcfdllaaacpjjejeg)
+- Firefox, Opera is in process.
 
 Once you have it running, visit different pages like:
 
@@ -98,7 +96,7 @@ Once you have it running, visit different pages like:
 
 Check the control center to see what information has been shared.
 
-Please note: 
+Please note:
 
 - Local Sheriff will not work optimally if you have some tools like ad-blocking, Ghostery, privacy-badger installed.
 
@@ -135,7 +133,7 @@ Thanks for your interest in contributing to *Local Sheriff*! There are many ways
 
 ## Contributors:
 
-Thanks to [@solso](https://twitter.com/solso) [@Pythux](https://twitter.com/Pythux) [@ecnmst](https://github.com/ecnmst) for their valuable inputs and being early adopters of this tool. 
+Thanks to [@solso](https://twitter.com/solso) [@Pythux](https://twitter.com/Pythux) [@ecnmst](https://github.com/ecnmst) for their valuable inputs and being early adopters of this tool.
 
 #### Lead Developer:
 
