@@ -2,12 +2,12 @@
   "name" : "Local Sheriff",
   "applications": {
     "gecko": {
-      "id": "firefox@cliqz.com",
+      "id": "modi.konark@gmail.com",
       "strict_min_version": "49.0"
     }
   },
   "version" : "0.1",
-  "description" : "Test",
+  "description" : "Local sheriff is a reconnaissance tool in your browser for your data.",
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';",
   "icons": {
     "256": "icons/sheriff.png"
@@ -24,7 +24,7 @@
   },
   "content_scripts": [{
     "matches" : ["http://*/*", "https://*/*"],
-    "match_about_blank": true, // There is a bug in chrome content-scripts, if there is no src then content script cannot be injected.
+    "match_about_blank": true,
     "js": ["scripts/content-script.js"],
     "all_frames": true,
     "run_at": "document_end"
