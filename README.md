@@ -91,7 +91,6 @@ Please note Firefox will remove the extension on restart.
 
 Alternatively:
 - You can install from Chrome store : [Local Sheriff](https://chrome.google.com/webstore/detail/local-sheriff/ckmkiloofgfalfdhcfdllaaacpjjejeg)
-- Firefox, Opera is in process.
 
 Once you have it running, visit different pages like:
 

@@ -43,6 +43,11 @@ const inputFieldsCache = {};
 
 let cookieTable = {};
 
+// Maintain a mapping of tab => parent url.
+// How is parent url defined? when we observe a main_frame request.
+
+const parentTabMapping = {};
+
 Object.keys(trackerData).forEach(e => {
 	trackerData[e].hosts.forEach(y => {
 		trackerDomains.push(y);
@@ -478,12 +483,27 @@ function getReferrer(request) {
 // This the where all requests are passed and check for third-parties start to happen.
 function onSendHeadersListeners(request) {
 	try {
+		// console.log(JSON.stringify(request));
+
+		if (request.type === 'main_frame') {
+			console.log(JSON.stringify(request));
+			parentTabMapping[request.tabId] = request.url;
+		}
+
+		/*
 		let initiatorURL = '';
 		if (request.initiator) {
 			initiatorURL = request.initiator;
 		} else {
 			initiatorURL = getReferrer(request);
 		}
+		*/
+
+		// This helps to detect cases of cookie sync. like foodora => criteo.
+		let initiatorURL = parentTabMapping[request.tabId];
+		if (!initiatorURL) getReferrer(request);
+
+		//console.log(`${request.url} >>>>> ${initiatorURL}`);
 
 		if (!initiatorURL) return;
 		if (initiatorURL.indexOf('-extension://') > -1) return;
@@ -510,12 +530,23 @@ function onSendHeadersListeners(request) {
 			// Let's see if whotracks.me data provides us any information.
 			// If the companyDetailsTP.company_name is not unknown and different from
 			// companyDetailsFP.company_name then we continue.
+			// Also avoid cases like FP:nytimes.com & TP:messaging-notifications.api.nytimes.com
 
-			if (companyDetailsTP.company_name.toLowerCase() === 'unknown' || (companyDetailsTP.company_name !== companyDetailsFP.company_name)) {
+			if ((companyDetailsTP.company_name.toLowerCase() === 'unknown' || (companyDetailsTP.company_name !== companyDetailsFP.company_name)) && (partialHostName !== partialHostNameFP)) {
+
+				console.log(`TP Check >>> ${request.url} >>>> ${initiatorURL} >>> ${companyDetailsTP.company_name} >>>> ${companyDetailsFP.company_name} >>> ${partialHostName} >>>> ${partialHostNameFP}`);
 				// Check if referrer is there.
 				request.requestHeaders.forEach( header => {
 					if (header.name.toLowerCase() === 'referer') {
-						addToDict(header.value,  companyDetailsTP);
+
+						// Let's check if header.value hostname is different than FP hostname.
+						// This can happen eg: Foodora loads criteo loads adserver.
+						// Now adserver get ref as criteo which gives incorrect info on FP.
+
+						const parsedRefName = parseURL(header.value);
+						if (parsedRefName && (parsedRefName.hostname === parsedInitiatorURL.hostname)) {
+							addToDict(header.value,  companyDetailsTP);
+						}
 
 						// Add to company tree;
 						//addToCompanyTree(companyName, header.value);
