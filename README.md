@@ -4,6 +4,8 @@
 Think of Local sheriff as a reconnaissance tool in your browser.
 While you normally browse the internet it works in the background and helps you to identify what sensitive information(PII) about you is being shared / leaked to which all third-parties.
 
+Local Sheriff is a web-extension that can used with Chrome, Opera, Firefox. Usage section has more details.
+
  ![cover image](docs/images/cover-image.png)
 
 ## Motivation:
@@ -40,11 +42,11 @@ Sensitive user information like passwords, email-ids, name, order IDs, date-of-b
 
 **1.	Via HTTP Headers like Referrer**
 
-    ![cover image](docs/images/data-shared-in-ref.png)
+   ![cover image](docs/images/data-shared-in-ref.png)
 
 **2.	Via query parameters**
  
-     ![cover image](docs/images/data-shared-query-parameters.png)
+   ![cover image](docs/images/data-shared-query-parameters.png)
 
 **3.	Browser features like Chrome browser – Translate and more.**
 
