@@ -9,6 +9,7 @@ Local Sheriff is a web-extension that can used with Chrome, Opera, Firefox. Usag
  ![cover image](docs/images/cover-image.png)
 
 ## Motivation:
+ ![cover image](docs/images/image-tracking.jpeg)
 
 It has become a norm for websites to load enormous amounts of third-party resources on their webpages. While the websites have genuine use cases like analytics, measure app performance, audience measurements, goal conversions, content recommendation, social sharing , CDNs etc.
 
