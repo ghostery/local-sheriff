@@ -594,7 +594,6 @@ function onSendHeadersListeners(request) {
 				console.log(">> Companies are same >>> " + companyDetailsTP.company_name + ' >>>> ' + companyDetailsFP.company_name)
 			}
 
-
 			//}
 		}
 	} catch(ee) {
@@ -715,7 +714,7 @@ setInterval(purgeInputFieldsCache, 2000);
 // CHROME EXTENSION APIs.
 
 // Need to listen to onSendHeaders.
-chrome.webRequest.onSendHeaders.addListener( onSendHeadersListeners, {urls: [ "<all_urls>" ]},['requestHeaders']);
+chrome.webRequest.onSendHeaders.addListener(onSendHeadersListeners, {urls: [ "<all_urls>" ]},['requestHeaders']);
 
 // chrome.webRequest.onCompleted.addListener(console.log)
 // Need to open the control-panel.
@@ -726,3 +725,24 @@ chrome.browserAction.onClicked.addListener(function(tab){
 // Receive messages from control-panel.
 chrome.runtime.onMessage.addListener(onMessageListener);
 
+
+
+// Because of a bug in FF: https://bugzilla.mozilla.org/show_bug.cgi?id=1405971,
+// when doing fetch request from within the extension, it will send the unique ID.
+// Hence this check, to remove it.
+// Need to compare if onSendHeaders and onBeforeSendHeaders have the same object,
+// then we should only keep onBeforeSenHeaders as it allows modifying.
+// This only impacts Firefox & Firefox based browsers.
+
+chrome.webRequest.onBeforeSendHeaders.addListener(function(request) {
+	try {
+			request.requestHeaders.forEach( header => {
+			if (header.name.toLowerCase() === 'origin' && header.value.toLowerCase().indexOf('-extension://') > -1) {
+				header.value = '';
+			}
+			return {requestHeaders: request.requestHeaders};
+		});
+	} catch (ee) {
+		return {requestHeaders: request.requestHeaders};
+	}
+}, {urls: [ "<all_urls>" ]},['blocking', 'requestHeaders']);
