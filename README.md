@@ -1,10 +1,12 @@
  ![Local shreiff Logo](docs/images/sheriff-icon-doc.png)
 # Local-sheriff
 
+[![DEFCON 26 Demolabs](https://img.shields.io/badge/DEFCON%2026-DEMOLABS-red.svg)](https://www.defcon.org/html/defcon-26/dc-26-demolabs.html)
+
 Think of Local sheriff as a reconnaissance tool in your browser.
 While you normally browse the internet it works in the background and helps you to identify what sensitive information(PII) about you is being shared / leaked to which all third-parties.
 
-Local Sheriff is a web-extension that can used with Chrome, Opera, Firefox. Usage section has more details.
+Local Sheriff is a web-extension that can be used with Chrome, Opera, Firefox. Usage section has more details.
 
  ![cover image](docs/images/cover-image.png)
 
@@ -146,3 +148,7 @@ Thanks to [@solso](https://twitter.com/solso) [@Pythux](https://twitter.com/Pyth
 #### Lead Developer:
 
 Konark Modi: [@konarkmodi](https://twitter.com/konarkmodi)
+
+#### Coverage:
+
+- [Threatpost](https://threatpost.com/def-con-2018-telltale-urls-leak-pii-to-dozens-of-third-parties/134960/)
