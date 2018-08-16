@@ -106,7 +106,7 @@ function loadFromDatabase() {
 	db.inputFieldsCache.each( row => {
 		inputFieldsCache[row.value] = row.summary;
 	});
-	console.log(">>>");
+
 	db.tpURLFP.each( row => {
 		thirdPartyFP[row.tpurl] = row.details;
 	});
@@ -116,4 +116,35 @@ function loadCookiesFromDatabase() {
 	dbCookie.cookietable.each( row => {
 		cookieTable[row.url] = row.details;
 	});
+}
+
+function cleanLSDB() {
+	// Clean local-sheriff DB.
+	return db.delete().then(() => {
+	    console.log("Local-sheriff Database successfully deleted");
+	    Promise.resolve(true);
+	}).catch((err) => {
+	    console.error("Could not delete cookie database: " +  err);
+	    Promise.reject(false);
+	});
+}
+
+function cleanCookieDB() {
+	// Clean local-sheriff DB.
+	return dbCookie.delete().then(() => {
+	    console.log("Cookie Database successfully deleted");
+	    Promise.resolve(true);
+	}).catch((err) => {
+	    console.error("Could not delete cookie database: " +  err);
+	    Promise.reject(false);
+	});
+}
+
+function cleanStorage() {
+
+	// Clean databases and then re-load the extension.
+
+	Promise.all([cleanLSDB(), cleanCookieDB()]).then( status => {
+		chrome.runtime.reload();
+	}).catch(console.log);
 }

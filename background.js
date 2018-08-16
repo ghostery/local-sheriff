@@ -114,7 +114,6 @@ function addThirdPartyFP(tp, fp, companyDetailsTP, companyDetailsFP) {
 		fp
 	});
 
-	console.log(thirdPartyFP[tp]);
 }
 
 function addToCompanyTree(companyName, ref) {
@@ -486,7 +485,6 @@ function onSendHeadersListeners(request) {
 		// console.log(JSON.stringify(request));
 
 		if (request.type === 'main_frame') {
-			console.log(JSON.stringify(request));
 			parentTabMapping[request.tabId] = request.url;
 		}
 
@@ -636,6 +634,11 @@ function onMessageListener(info, sender, sendResponse){
 			sendResponse({
 				response: checkInputFieldsLeaked()
 			});
+		}
+
+		// Clean storage.
+		if (info.type === 'cleanStorage') {
+			cleanStorage();
 		}
 	}
 

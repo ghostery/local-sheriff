@@ -254,8 +254,19 @@ function updateInputFields() {
 
   });
 }
+
+function clean() {
+    const additionalInfoIFL = {
+    type: 'cleanStorage'
+  }
+
+  chrome.runtime.sendMessage(additionalInfoIFL);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
 
+  // Listen for clear data button click.
+  document.getElementById("clean-storage").addEventListener("click", clean);
 });
 
 function onMessageListener(info, sender, sendResponse){
@@ -268,4 +279,3 @@ function onMessageListener(info, sender, sendResponse){
 
 chrome.runtime.onMessage.addListener(onMessageListener);
 updateInputFields();
-
