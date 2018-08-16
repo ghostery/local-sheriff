@@ -141,6 +141,10 @@ Thanks for your interest in contributing to *Local Sheriff*! There are many ways
 
 - Extensions in Chrome by default do not work in incognito mode. While, in Firefox they are enabled with limited functionailty. It would worth checking and deciding what should be the desired behaviour.
 
+- Clear data: Incase the extension is slow, or you want to remove the data. Please click on the clear data button. It will remove all the data stored by Local Sheriff & re-load the extension.
+
+![Clear Data](docs/images/clear-data.png)
+
 ## Contributors:
 
 Thanks to [@solso](https://twitter.com/solso) [@Pythux](https://twitter.com/Pythux) [@ecnmst](https://github.com/ecnmst) for their valuable inputs and being early adopters of this tool.
