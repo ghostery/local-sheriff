@@ -152,4 +152,4 @@ Konark Modi: [@konarkmodi](https://twitter.com/konarkmodi)
 #### Coverage:
 
 - [Threatpost](https://threatpost.com/def-con-2018-telltale-urls-leak-pii-to-dozens-of-third-parties/134960/)
-- [ghacks.net] (https://www.ghacks.net/2018/08/12/local-sheriff-reveals-if-sites-leak-personal-information-with-third-parties/)
+- [ghacks.net](https://www.ghacks.net/2018/08/12/local-sheriff-reveals-if-sites-leak-personal-information-with-third-parties/)
