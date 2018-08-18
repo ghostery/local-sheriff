@@ -15,6 +15,11 @@ Types of leaks:
   Keep track of cookies and other headers.
   Enhance chrome devtools???
 */
+function safeHTML(str) {
+	const temp = document.createElement('div');
+	temp.textContent = str;
+  return temp.innerHTML;
+};
 
 function highlight(text) {
   const re = new RegExp(text, 'ig');
@@ -77,9 +82,9 @@ function generateCardTP(row, query) {
   let card = `<div class="container bs-docs-container"><div class="bs-docs-section"><div class="bs-callout bs-callout-danger">`;
   card += `<div class="card" style="overflow-wrap:break-word;">`;
   card += `<div class="card-body">`;
-  card += `<h4>Also found ${query} in third-party urls courtesy ${row.details.fpdetails.tracker_host}: </h4><div class="card-title leaky-url"><b>${row.leakyTP}</b></div><br/>`;
+  card += `<h4>Also found ${safeHTML(query)} in third-party urls courtesy ${row.details.fpdetails.tracker_host}: </h4><div class="card-title leaky-url"><b>${row.leakyTP}</b></div><br/>`;
   if (row.cookie) {
-    card += `<span class="badge badge-warning">Cookie</span>${row.cookie}<br/>`;
+    card += `<span class="badge badge-warning">Cookie</span>${safeHTML(row.cookie)}<br/>`;
   } else {
     card += `<span class="badge badge-warning">No cookie detected.</span>`;
   }
@@ -116,9 +121,11 @@ function inputSearch(query) {
 
 function search(query){
   // Send the query to background and capture the response.
+
+  const safeQuery = safeHTML(query);
   const additionalInfo = {
     type: 'checkPresence',
-    query
+    query: safeQuery
   };
 
 
@@ -130,7 +137,7 @@ function search(query){
     const countDomains = e.response.ls.domain.length; //Placeholder.
     const counttpDomains = e.response.ls.tpHosts.length;
 
-    document.getElementById('summary').innerHTML = '<h1>' + query + '</span></h1> <p>has been leaked to <b>' + counttpDomains +' third-party domains </b>, owned by <b>' + countCompanies + ' different companies </b> courtesy <b>' + countDomains + ' website. </p>';
+    document.getElementById('summary').innerHTML = '<h1>' + safeQuery + '</span></h1> <p>has been leaked to <b>' + counttpDomains +' third-party domains </b>, owned by <b>' + countCompanies + ' different companies </b> courtesy <b>' + countDomains + ' website. </p>';
 
     /*
     if (countDomains === 1) {
@@ -156,7 +163,7 @@ function search(query){
       // Iterate over each result.
       e.response.details[0].forEach( (r, idx) => {
 
-        const card = generateCard(r, idx, query);
+        const card = generateCard(r, idx, safeQuery);
         document.getElementById('results').innerHTML += card;
       });
 
@@ -171,15 +178,15 @@ function search(query){
 
       // Iterate over each result.
       e.response.details[2].forEach( (r, idx) => {
-        const card = generateCardTP(r, query);
+        const card = generateCardTP(r, safeQuery);
         document.getElementById('tp-results').innerHTML += card;
       });
 
     };
 
-    console.log(">>>>> Query >>>> " + query);
+    console.log(">>>>> safeQuery >>>> " + safeQuery);
 
-    highlight(query);
+    highlight(safeQuery);
     // Detect click on url div.
     $('h5.leaky-url').click(function(e) {
         console.log(e);
@@ -229,16 +236,16 @@ function updateInputFields() {
   chrome.runtime.sendMessage(additionalInfoIFL, e => {
     let html = '';
     Object.keys(e.response).forEach( (y, idx) => {
-      if (e.response[y]) {
+      const safeY = safeHTML(y);
+      if (e.response[safeY]) {
         // Info leaked.
-        html += `<code>${y}: </code><button id=input-details-${idx} value="${y}" class="label label-danger">Yes </button><br/>`;
+        html += `<code>${safeY}: </code><button id=input-details-${idx} value="${safeY}" class="label label-danger">Yes </button><br/>`;
       }
       else {
         // Info not leaked so far.
-        html += `<code>${y}: </code> <button id=input-details-${idx} value="${y}" class="label label-success">No </button><br/>`;
+        html += `<code>${safeY}: </code> <button id=input-details-${idx} value="${safeY}" class="label label-success">No </button><br/>`;
       }
     });
-
     document.getElementById('input-fields-summary').innerHTML = html;
 
     // This is a very inefficient way of adding a listener. But keeping it like this for now.
