@@ -18,7 +18,7 @@ It has become a norm for websites to load enormous amounts of third-party resour
 But the way these third-parties are implemented & used by websites they are often not privacy proof.
 Sensitive user information like passwords, email-ids, name, order IDs, date-of-birth and other PII is leaked in abundance to whole bunch of third-parties.
 
- ![cover image](docs/images/companies-leaking-private-info.png)
+ ![cover image](docs/images/local-sherrif-lufthansa-image.png)
 
 **The issues that Local Sheriff aims to highlight:**
 1. Was the user aware and gave consent to share this sensitive information with this these parties?
