@@ -21,11 +21,11 @@ Sensitive user information like passwords, email-ids, name, order IDs, date-of-b
  ![cover image](docs/images/local-sherrif-lufthansa-image.png)
 
 **The issues that Local Sheriff aims to highlight:**
-1. Was the user aware and gave consent to share this sensitive information with this these parties?
+1. Was the user aware and gave consent to share this sensitive information with these parties?
 2. Why do these third parties need to receive this information?
-3. Is website owner even aware that sensitive user information is being leaked to these third parties?
+3. Is the website owner even aware that sensitive user information is being leaked to these third parties?
 4. Who are these third parties?
-5. What can they doing with user information?
+5. What can they do with this user information?
 
 ## How Local Sheriff identifies leaks:
 
@@ -58,7 +58,7 @@ Sensitive user information like passwords, email-ids, name, order IDs, date-of-b
 2. URLs being leaked by a first-party to third-party. Via HTTP header like Referrer and/or via query parameters third-parties.
 3. Data being sent to third-parties in GET request & POST request.
 4. Information being entered in forms.
-5. As soons as Local Sheriff detects that a URL has been shared with a third-party, it issues an anonymous `GET` request to that page again to simulate what information can be accessed only based on the URL without user-cookies, session etc.
+5. As soon as Local Sheriff detects that a URL has been shared with a third-party, it issues an anonymous `GET` request to that page again to simulate what information can be accessed only based on the URL without user cookies, session etc.
 6. HTML content of page fetched after step-5 is also saved for inspection.
 
 ### The user can at any time visit the control-panel page by clicking the icon in the address bar:
@@ -73,7 +73,7 @@ Sensitive user information like passwords, email-ids, name, order IDs, date-of-b
 
 ## Data Sources:
 
-Local Sheriff uses the open-source tracker database from [WhoTracks.me](https://whotracks.me/) for creating tracker hostname to company mapping.Right now it is packaged in the extension itself.
+Local Sheriff uses the open-source tracker database from [WhoTracks.me](https://whotracks.me/) for creating tracker hostname to company mapping. Right now it is packaged in the extension itself.
 
 Eg: Given a tracker hostname: `atlassbx.com` find the company who owns it: `Facebook`.
 
