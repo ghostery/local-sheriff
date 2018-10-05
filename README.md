@@ -4,7 +4,7 @@
 [![DEFCON 26 Demolabs](https://img.shields.io/badge/DEFCON%2026-DEMOLABS-red.svg)](https://www.defcon.org/html/defcon-26/dc-26-demolabs.html)
 
 Think of Local sheriff as a reconnaissance tool in your browser.
-While you normally browse the internet it works in the background and helps you to identify what sensitive information(PII) about you is being shared / leaked to which all third-parties.
+While you normally browse the internet it works in the background and helps you to identify what sensitive [personally identifiable information (PII)](https://en.wikipedia.org/wiki/Personally_identifiable_information)  about you is being shared or leaked, and to which all third-parties.
 
 Local Sheriff is a web-extension that can be used with Chrome, Opera, Firefox. Usage section has more details.
 
@@ -13,7 +13,7 @@ Local Sheriff is a web-extension that can be used with Chrome, Opera, Firefox. U
 ## Motivation:
  ![cover image](docs/images/image-tracking.jpeg)
 
-It has become a norm for websites to load enormous amounts of third-party resources on their webpages. While the websites have genuine use cases like analytics, measure app performance, audience measurements, goal conversions, content recommendation, social sharing , CDNs etc.
+It has become the norm for websites to load enormous amounts of third-party resources on their webpages. Websites have genuine use cases like analytics, measure app performance, audience measurements, goal conversions, content recommendation, social sharing , CDNs etc.
 
 But the way these third-parties are implemented & used by websites they are often not privacy proof.
 Sensitive user information like passwords, email-ids, name, order IDs, date-of-birth and other PII is leaked in abundance to whole bunch of third-parties.
