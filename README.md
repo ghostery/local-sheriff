@@ -4,7 +4,7 @@
 [![DEFCON 26 Demolabs](https://img.shields.io/badge/DEFCON%2026-DEMOLABS-red.svg)](https://www.defcon.org/html/defcon-26/dc-26-demolabs.html)
 
 Think of Local sheriff as a reconnaissance tool in your browser.
-While you normally browse the internet it works in the background and helps you to identify what sensitive information(PII) about you is being shared / leaked to which all third-parties.
+While you normally browse the internet it works in the background and helps you to identify what sensitive [personally identifiable information (PII)](https://en.wikipedia.org/wiki/Personally_identifiable_information)  about you is being shared or leaked, and to which all third-parties.
 
 Local Sheriff is a web-extension that can be used with Chrome, Opera, Firefox. Usage section has more details.
 
@@ -13,7 +13,7 @@ Local Sheriff is a web-extension that can be used with Chrome, Opera, Firefox. U
 ## Motivation:
  ![cover image](docs/images/image-tracking.jpeg)
 
-It has become a norm for websites to load enormous amounts of third-party resources on their webpages. While the websites have genuine use cases like analytics, measure app performance, audience measurements, goal conversions, content recommendation, social sharing , CDNs etc.
+It has become the norm for websites to load enormous amounts of third-party resources on their webpages. Websites have genuine use cases like analytics, measure app performance, audience measurements, goal conversions, content recommendation, social sharing , CDNs etc.
 
 But the way these third-parties are implemented & used by websites they are often not privacy proof.
 Sensitive user information like passwords, email-ids, name, order IDs, date-of-birth and other PII is leaked in abundance to whole bunch of third-parties.
@@ -21,11 +21,11 @@ Sensitive user information like passwords, email-ids, name, order IDs, date-of-b
  ![cover image](docs/images/local-sherrif-lufthansa-image.png)
 
 **The issues that Local Sheriff aims to highlight:**
-1. Was the user aware and gave consent to share this sensitive information with this these parties?
+1. Was the user aware and gave consent to share this sensitive information with these parties?
 2. Why do these third parties need to receive this information?
-3. Is website owner even aware that sensitive user information is being leaked to these third parties?
+3. Is the website owner even aware that sensitive user information is being leaked to these third parties?
 4. Who are these third parties?
-5. What can they doing with user information?
+5. What can they do with this user information?
 
 ## How Local Sheriff identifies leaks:
 
@@ -58,7 +58,7 @@ Sensitive user information like passwords, email-ids, name, order IDs, date-of-b
 2. URLs being leaked by a first-party to third-party. Via HTTP header like Referrer and/or via query parameters third-parties.
 3. Data being sent to third-parties in GET request & POST request.
 4. Information being entered in forms.
-5. As soons as Local Sheriff detects that a URL has been shared with a third-party, it issues an anonymous `GET` request to that page again to simulate what information can be accessed only based on the URL without user-cookies, session etc.
+5. As soon as Local Sheriff detects that a URL has been shared with a third-party, it issues an anonymous `GET` request to that page again to simulate what information can be accessed only based on the URL without user cookies, session etc.
 6. HTML content of page fetched after step-5 is also saved for inspection.
 
 ### The user can at any time visit the control-panel page by clicking the icon in the address bar:
@@ -73,7 +73,7 @@ Sensitive user information like passwords, email-ids, name, order IDs, date-of-b
 
 ## Data Sources:
 
-Local Sheriff uses the open-source tracker database from [WhoTracks.me](https://whotracks.me/) for creating tracker hostname to company mapping.Right now it is packaged in the extension itself.
+Local Sheriff uses the open-source tracker database from [WhoTracks.me](https://whotracks.me/) for creating tracker hostname to company mapping. Right now it is packaged in the extension itself.
 
 Eg: Given a tracker hostname: `atlassbx.com` find the company who owns it: `Facebook`.
 
