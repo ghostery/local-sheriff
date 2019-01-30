@@ -479,8 +479,26 @@ function getReferrer(request) {
 	return ref;
 }
 
+// We need to check if it originates from a tab which is open in incognito. If yes, then do not observe the requests.
+// On chrome it works without this check, because by default extensions are disabled in InCognito mode.
+
+function observeRequest(request) {
+	const tabID = request.tabId;
+	browser.tabs.get(tabID)
+	.then( tabDetails => {
+		console.log(tabDetails);
+		if (!tabDetails.incognito) {
+			onSendHeadersListeners(request)
+		}
+	})
+	.catch((err) => {
+		console.log("Could not get request details", request);
+	});
+}
+
 // This the where all requests are passed and check for third-parties start to happen.
 function onSendHeadersListeners(request) {
+
 	try {
 		// console.log(JSON.stringify(request));
 
@@ -717,7 +735,7 @@ setInterval(purgeInputFieldsCache, 2000);
 // CHROME EXTENSION APIs.
 
 // Need to listen to onSendHeaders.
-chrome.webRequest.onSendHeaders.addListener(onSendHeadersListeners, {urls: [ "<all_urls>" ]},['requestHeaders']);
+chrome.webRequest.onSendHeaders.addListener(observeRequest, {urls: [ "<all_urls>" ]},['requestHeaders']);
 
 // chrome.webRequest.onCompleted.addListener(console.log)
 // Need to open the control-panel.

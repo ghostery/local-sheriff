@@ -6,14 +6,13 @@
 // Other issues where it's autocompleted. Only partial results are shown.
 // Check what all information needs to be saved.
 // Also breaks when fields are auto-filled.
-console.log(">>> Console ");
+
 function getDetails(ele) {
 	const objDetails = {
 		id: ele.id,
 		cn: ele.className
 	}
 
-	console.log(">>>>>>... " + ele.className);
 	return objDetails;
 };
 
@@ -23,11 +22,9 @@ function loadListeners(evt){
 		const form = forms[i];
 		document.forms[i].addEventListener("blur", function( event ) {
 			// We should generally avoid saving passwords. // May be not save it but just check and notify it to the user.
-			console.log(event.srcElement);
 			if (event.srcElement.type !== 'password') {
-				console.log(event.srcElement.value);
-
-				const value = event.srcElement.value;
+			
+				const value = event.srcElement.value.slice(0,20);
 				const additionalInfo = {
 					type: 'inputFields',
 					details: {},
@@ -59,4 +56,10 @@ function loadListeners(evt){
 };
 
 // If there is a neat way to detect dom load finished, that would be preferrered.
-window.setTimeout(loadListeners, 2500);
+// Let's check if this is a private tab. If yes then do not load content-script here.
+if(typeof('chrome') === 'undefined') {
+	var chrome = browser;
+}
+if (!chrome.extension.inIncognitoContext) {
+	window.setTimeout(loadListeners, 2500);
+}
