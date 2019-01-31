@@ -121,6 +121,7 @@ Please note:
 
 ## App store links:
 - Chrome store - [Local Sheriff](https://chrome.google.com/webstore/detail/local-sheriff/ckmkiloofgfalfdhcfdllaaacpjjejeg)
+- Firefox store - [Local Sheriff](https://addons.mozilla.org/en-US/firefox/addon/local-sheriff/)
 
 ## Contributing
 
