@@ -1,7 +1,8 @@
 if(typeof('chrome') === 'undefined') {
   var chrome = browser;
 }
-// var browser = chrome;
+
+var browser = browser || chrome;
 
 function log(message) {
 	if (debug) {
@@ -484,16 +485,20 @@ function getReferrer(request) {
 
 function observeRequest(request) {
 	const tabID = request.tabId;
-	browser.tabs.get(tabID)
-	.then( tabDetails => {
+	browser.tabs.get(tabID, (tabDetails) => {
 		console.log(tabDetails);
-		if (!tabDetails.incognito) {
+		if (tabDetails && !tabDetails.incognito) {
 			onSendHeadersListeners(request)
 		}
+	});
+	/*
+	.then( tabDetails => {
+
 	})
 	.catch((err) => {
 		console.log("Could not get request details", request);
 	});
+	*/
 }
 
 // This the where all requests are passed and check for third-parties start to happen.
@@ -550,7 +555,7 @@ function onSendHeadersListeners(request) {
 
 			if ((companyDetailsTP.company_name.toLowerCase() === 'unknown' || (companyDetailsTP.company_name !== companyDetailsFP.company_name)) && (partialHostName !== partialHostNameFP)) {
 
-				console.log(`TP Check >>> ${request.url} >>>> ${initiatorURL} >>> ${companyDetailsTP.company_name} >>>> ${companyDetailsFP.company_name} >>> ${partialHostName} >>>> ${partialHostNameFP}`);
+				// console.log(`TP Check >>> ${request.url} >>>> ${initiatorURL} >>> ${companyDetailsTP.company_name} >>>> ${companyDetailsFP.company_name} >>> ${partialHostName} >>>> ${partialHostNameFP}`);
 				// Check if referrer is there.
 				request.requestHeaders.forEach( header => {
 					if (header.name.toLowerCase() === 'referer') {
@@ -662,6 +667,7 @@ function onMessageListener(info, sender, sendResponse){
 
 
 	// Get input fields. PLEASE CHECK IF THIS IS A SAFE WAY. This could be exploited by websites.
+	console.log(sender);
 	if (info.type === 'inputFields') {
 
 		// Content scripts return "" at times.
