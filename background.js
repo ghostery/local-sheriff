@@ -754,7 +754,7 @@ setInterval(purgeInputFieldsCache, 2000);
 // CHROME EXTENSION APIs.
 
 // Need to listen to onSendHeaders.
-chrome.webRequest.onSendHeaders.addListener(observeRequest, { urls: ["<all_urls>"] }, ['requestHeaders']);
+chrome.webRequest.onSendHeaders.addListener(observeRequest, { urls: ["<all_urls>"] }, ['requestHeaders', 'extraHeaders']);
 
 // chrome.webRequest.onCompleted.addListener(console.log)
 // Need to open the control-panel.
