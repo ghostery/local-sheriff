@@ -16,23 +16,22 @@ Types of leaks:
   Enhance chrome devtools???
 */
 function safeHTML(str) {
-	const temp = document.createElement('div');
-	temp.textContent = str;
+  const temp = document.createElement('div');
+  temp.textContent = str;
   return temp.innerHTML;
 };
 
-function highlight(highlightText)
-{
-    const tp_results = document.getElementById("tp-results");
-    InstantSearch.highlight(tp_results, highlightText);
+function highlight(highlightText) {
+  const tp_results = document.getElementById("tp-results");
+  InstantSearch.highlight(tp_results, highlightText);
 
-    const results = document.getElementById("results");
-    InstantSearch.highlight(results, highlightText);
+  const results = document.getElementById("results");
+  InstantSearch.highlight(results, highlightText);
 }
 
 // Create results table.
 function createResultTable(info) {
-  
+
   const final_result = document.getElementById('final-results');
   final_result.textContent = '';
 
@@ -45,7 +44,7 @@ function createResultTable(info) {
 
   const tr = document.createElement('tr');
   const th_r = document.createElement('th');
-  
+
   th_r.textContent = 'Company';
   const th_r_2 = document.createElement('th');
   th_r_2.textContent = 'Website';
@@ -55,9 +54,8 @@ function createResultTable(info) {
   th.appendChild(tr);
 
   const tbody = document.createElement('tbody');
-  console.log(info);
-  Object.keys(info).forEach( (com, idx) => {
-    info[com]['websites'].forEach( website => {
+  Object.keys(info).forEach((com, idx) => {
+    info[com]['websites'].forEach(website => {
       const tr_1 = document.createElement('tr');
       const td = document.createElement('td');
       td.textContent = `${com}`;
@@ -104,12 +102,11 @@ function generateCard(row) {
   ul.style = "overflow-wrap:break-word;";
   div_card_body.appendChild(ul);
 
-  Object.keys(row.trackers).forEach( t => {
-    console.log(row.trackers);
+  Object.keys(row.trackers).forEach(t => {
     const li_title = document.createElement('li');
     li_title.className = "list-group-item active";
-    li_title.textContent =`${t}`;
-  
+    li_title.textContent = `${t}`;
+
     const li_details = document.createElement('li');
     li_details.className = "list-group-item";
     li_details.style = "overflow-wrap:break-word;";
@@ -139,7 +136,7 @@ function generateCardTP(row, query) {
   div_card_body_3.className = 'card';
   div_card_body_3.style = 'overflow-wrap:break-word;'
   div_card_body_2.appendChild(div_card_body_3);
-  
+
   const div_card_body_4 = document.createElement('div');
   div_card_body_4.className = 'card-body';
   div_card_body_3.appendChild(div_card_body_4);
@@ -166,10 +163,10 @@ function generateCardTP(row, query) {
     span_test.textContent = `${safeHTML(row.cookie)}`;
     results.appendChild(span_test);
   } else {
-      const span_label = document.createElement('span');
-      span_label.className = "badge badge-warning";
-      span_label.textContent = "No Cookie detected";
-      results.appendChild(span_label);
+    const span_label = document.createElement('span');
+    span_label.className = "badge badge-warning";
+    span_label.textContent = "No Cookie detected";
+    results.appendChild(span_label);
   }
 
 }
@@ -178,10 +175,10 @@ function getWebsitesCount(info) {
   const websites = new Set();
 
   //info.forEach( e => {
-    Object.keys(info.resultTable).forEach( y => {
-      console.log(info.resultTable[y]);
-      websites.add(info.resultTable[y].website);
-    });
+  Object.keys(info.resultTable).forEach(y => {
+    console.log(info.resultTable[y]);
+    websites.add(info.resultTable[y].website);
+  });
   //})
   console.log([...websites]);
   return [...websites];
@@ -193,14 +190,38 @@ document.onkeyup = function (oPEvt) {
   search(query);
 };
 
-function inputSearch(query) {
+function inputSearch(query, t) {
+  console.log(t);
   // Populate the text box and fire the search event.
   document.getElementById('search-box').value = query;
-  search(query);
+  search(query, t);
 }
 
-function search(query){
+function search(query, t) {
   // Send the query to background and capture the response.
+  let summary_1 = `has been leaked to`;
+  let summary_2 = `third - party domains`;
+  let summary_3 = ", owned by";
+  let summary_4 = "different companies";
+  let summary_4_s = " different company";
+  let summary_5 = "courtesy";
+  let summary_6 = "website.";
+  if (!t) {
+    // has been leaked to 10 third-party domains, owned by 1 different companies courtesy 9 website.
+    t = 'pii';
+
+  }
+
+  if (t === 'tracking_id') {
+    summary_1 = `can be used to track`;
+    summary_2 = `websites`;
+    summary_3 = ", owned by ";
+    summary_4 = " Companies";
+    summary_4_s = " Company";
+    summary_5 = "";
+    summary_6 = "";
+  }
+
 
   const safeQuery = safeHTML(query);
   const additionalInfo = {
@@ -213,9 +234,15 @@ function search(query){
 
     // console.log(e.response);
     // console.log(getWebsitesCount(e.response));
-    const countCompanies = e.response.ls.companies.length; // Placeholder.
-    const countDomains = e.response.ls.domain.length; //Placeholder.
-    const counttpDomains = e.response.ls.tpHosts.length;
+    let countCompanies = e.response.ls.companies.length; // Placeholder.
+    let countDomains = e.response.ls.domain.length; //Placeholder.
+
+    let counttpDomains = e.response.ls.tpHosts.length;
+    console.log(e.response.ls);
+    if (t === 'tracking_id') {
+      counttpDomains = [...new Set(e.response.ls.domain)].length;
+      countDomains = e.response.ls.tpHosts.length;
+    }
 
     const summary = document.getElementById('summary');
     summary.textContent = '';
@@ -225,21 +252,27 @@ function search(query){
     summary.appendChild(h1);
 
     const p1 = document.createElement('p');
-    p1.textContent = `has been leaked to`;
-    
+    p1.textContent = summary_1;
+
     const b1 = document.createElement('b');
-    b1.textContent = ` ${counttpDomains}  third-party domains`;
+    b1.textContent = ` ${counttpDomains}  ${summary_2}`;
     p1.appendChild(b1);
-    p1.appendChild(document.createTextNode(", owned by"));
+    p1.appendChild(document.createTextNode(summary_3));
 
     const b2 = document.createElement('b');
-    b2.textContent = ` ${countCompanies} different companies`;
+    if (countCompanies === 1) {
+      b2.textContent = ` ${countCompanies} ${summary_4_s}`;
+    } else {
+      b2.textContent = ` ${countCompanies} ${summary_4}`;
+    }
     p1.appendChild(b2);
-    p1.appendChild(document.createTextNode(' courtesy'));
+    p1.appendChild(document.createTextNode(summary_5));
 
-    const b3 = document.createElement('b');
-    b3.textContent = ` ${countDomains} website.`;
-    p1.appendChild(b3);
+    if (t !== 'tracking_id') {
+      const b3 = document.createElement('b');
+      b3.textContent = ` ${countDomains} ${summary_6}`;
+      p1.appendChild(b3);
+    }
 
     summary.appendChild(p1);
 
@@ -256,9 +289,9 @@ function search(query){
     // Check Leaky URLs.
     if (Object.keys(e.response.details[0]).length > 0) {
 
-      
+
       // Iterate over each result.
-      e.response.details[0].forEach( (r, idx) => {
+      e.response.details[0].forEach((r, idx) => {
         generateCard(r);
       });
 
@@ -280,7 +313,7 @@ function search(query){
 
 
       // Iterate over each result.
-      e.response.details[2].forEach( (r, idx) => {
+      e.response.details[2].forEach((r, idx) => {
         generateCardTP(r, safeQuery);
       });
 
@@ -304,19 +337,19 @@ function updateInputFields() {
 
   chrome.runtime.sendMessage(additionalInfoIFL, e => {
     let html = '';
-    Object.keys(e.response).forEach( (y, idx) => {
+    Object.keys(e.response).forEach((y, idx) => {
       const safeY = safeHTML(y);
       const fields_summary = document.getElementById('input-fields-summary');
       if (e.response[safeY]) {
         // Info leaked.
         const code = document.createElement('code');
-        code.textContent = `${safeY}:`;
+        code.textContent = `${safeY}: `;
         fields_summary.appendChild(code);
 
         const btn = document.createElement('button');
         btn.textContent = 'Yes';
-        btn.value = `${safeY}`;
-        btn.id = `input-details-${idx}`;
+        btn.value = `${safeY} `;
+        btn.id = `input - details - ${idx} `;
         btn.className = 'label label-danger';
         fields_summary.appendChild(btn);
         fields_summary.appendChild(document.createElement('br'));
@@ -324,13 +357,13 @@ function updateInputFields() {
       else {
         // Info not leaked so far.
         const code = document.createElement('code');
-        code.textContent = `${safeY}:`;
+        code.textContent = `${safeY}: `;
         fields_summary.appendChild(code);
 
         const btn = document.createElement('button');
         btn.textContent = 'No';
-        btn.value = `${safeY}`;
-        btn.id = `input-details-${idx}`;
+        btn.value = `${safeY} `;
+        btn.id = `input - details - ${idx} `;
         btn.className = 'label label-success';
         fields_summary.appendChild(btn);
         fields_summary.appendChild(document.createElement('br'));
@@ -339,10 +372,10 @@ function updateInputFields() {
 
 
     // This is a very inefficient way of adding a listener. But keeping it like this for now.
-    Object.keys(e.response).forEach( (y, idx) => {
-      if(document.getElementById(`input-details-${idx}`)) {
-        document.getElementById(`input-details-${idx}`).addEventListener("click", function(){
-          inputSearch(document.getElementById(`input-details-${idx}`).value);
+    Object.keys(e.response).forEach((y, idx) => {
+      if (document.getElementById(`input - details - ${idx} `)) {
+        document.getElementById(`input - details - ${idx} `).addEventListener("click", function () {
+          inputSearch(document.getElementById(`input - details - ${idx} `).value);
         });
       }
     });
@@ -353,20 +386,20 @@ function updateInputFields() {
 }
 
 function clean() {
-    const additionalInfoIFL = {
+  const additionalInfoIFL = {
     type: 'cleanStorage'
   }
 
   chrome.runtime.sendMessage(additionalInfoIFL);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
   // Listen for clear data button click.
   document.getElementById("clean-storage").addEventListener("click", clean);
 });
 
-function onMessageListener(info, sender, sendResponse){
+function onMessageListener(info, sender, sendResponse) {
   if (info.type === 'updateInputFields') {
     // Just to make sure, the calls have finised, else it will give incorrect information about leaks.
     // setTimeout(updateInputFields, 3000);
@@ -376,3 +409,4 @@ function onMessageListener(info, sender, sendResponse){
 
 chrome.runtime.onMessage.addListener(onMessageListener);
 updateInputFields();
+

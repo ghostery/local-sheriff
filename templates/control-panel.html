@@ -1,73 +1,90 @@
 <html>
-	<head>
-		<link href="../static/css/bootstrap.css" rel=stylesheet></link>
-		<link href="../static/css/docs.min.css" rel=stylesheet></link>
-		<script src="../scripts/control-panel.js"></script>
-		<script src="../scripts/instant-search-highlight.js"></script>
-	</head>
-	<body>
 
-		<!--
+<head>
+	<link href="../static/css/bootstrap.css" rel=stylesheet>
+	</link>
+	<link href="../static/css/docs.min.css" rel=stylesheet>
+	</link>
+	<script src="../scripts/control-panel.js"></script>
+	<script src="../scripts/instant-search-highlight.js"></script>
+</head>
+
+<body>
+
+	<!--
 		<button id="start-recording">Start recording</button>
 		<button id="stop-recording">Stop recording</button>
 		-->
-		<div class="container">
-			<div class="page-header">
-  				<h1>Local Sheriff</h1>
-  				<button type="button" id="clean-storage"> Clear Data </button>
+	<div class="container">
+		<div class="page-header">
+			<h1>Local Sheriff</h1>
+			<button type="button" id="clean-storage"> Clear Data </button>
 		</div>
-		<!--
-		<div class="container bs-docs-container">
-			<div class="bs-docs-section">
-				<div class="bs-callout bs-callout-info">
-					<h4>Summary</h4>
-					<p id="overall-summary">
 
-					</p>
-				 </div>
-			</div>
-		</div>
-		-->
 		<div class="container bs-docs-container">
 			<div class="bs-docs-section">
 				<div class="bs-callout bs-callout-danger">
-					<h4>Have any of the data points entered in forms been shared?</h4>
-					<p id="input-fields-summary">
+					<h4 id="h-input-fields-summary">Click to check: Any data point entered in forms been shared?</h4>
+					<p id="input-fields-summary" style="display:none">
 
 					</p>
-				 </div>
-			</div>
-		</div>
-			<div class="container-fluid">
-
-				<div class='navbar navbar-default'>
-
-				<p class='navbar-brand'>
-					Input information which should not have been shared without consent with services you have not interacted with. Like Email address, Phone number, Name, Address etc.
-				</p>
 				</div>
 			</div>
-			<input type="input" class="form-control" id="search-box" placeholder="Type to search..." value="">
-			  <script src="../scripts/tree.js"></script>
-			  
-		  	<div class="jumbotron">
-		  		<div id='summary'>
-		  		</div>
+		</div>
 
-		  		<div id='input-data'>
-		  		</div>
+		<div class="container bs-docs-container">
+			<div class="bs-docs-section">
+				<div class="bs-callout bs-callout-danger">
+					<h4 id="h-poi-summary">Click to check: Datapoints that are being used to track me across domains?
+					</h4>
+					<p id="poi-summary" style="display:none">
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="container bs-docs-container" id="h-company-summary">
+			<div class="bs-docs-section">
+				<div class="bs-callout bs-callout-danger">
+					<h4>Click to check: Which companies can track me on the internet?</h4>
+					<p id="company-summary" style="display:none">
+						dadadadasd
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+
+			<div class='navbar navbar-default'>
+
+				<p class='navbar-brand'>
+					Input information which should not have been shared without consent with services you have not
+					interacted with. Like Email address, Phone number, Name, Address etc.
+				</p>
+			</div>
+		</div>
+		<input type="input" class="form-control" id="search-box" placeholder="Type to search..." value="">
+		<script src="../scripts/tree.js"></script>
+
+		<div class="jumbotron">
+			<div id='summary'>
 			</div>
 
-			<div class="panel panel-default">
-			  <!-- Default panel contents -->
+			<div id='input-data'>
+			</div>
+		</div>
+
+		<div class="panel panel-default">
+			<!-- Default panel contents -->
 			<div id='final-results' style='display:none'>Results</div>
-			</div>
+		</div>
 
-			<div id='results'>
-		  	</div>
+		<div id='results'>
+		</div>
 
-			<div id='tp-results'>
-		  	</div>
-		 </div>
-	</body>
+		<div id='tp-results'>
+		</div>
+	</div>
+</body>
+
 </html>

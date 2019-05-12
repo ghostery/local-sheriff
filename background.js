@@ -23,6 +23,141 @@ function decode(txt) {
 	}
 }
 
+function cookie_parser(header, fp, tp) {
+	header.split(';').map(function (c) {
+		return c.trim().split('=').map(decode);
+	}).reduce(function (a, b) {
+		try {
+			// console.log(b);
+			a[b[0]] = JSON.parse(b[1]);
+		} catch (e) {
+			a[b[0]] = b[1];
+		}
+		// const cookie_map_key = b[0] + ":" + b[1];
+		cookie_map_key = b[1];
+		if (!cookie_map.hasOwnProperty(cookie_map_key)) {
+			cookie_map[cookie_map_key] = {};
+		}
+
+		if (!cookie_map[cookie_map_key].hasOwnProperty(tp)) {
+			cookie_map[cookie_map_key][tp] = new Set();
+		}
+		cookie_map[cookie_map_key][tp].add(fp);
+		//console.log(a);
+		return a;
+	}, {});
+}
+
+// parse query parameters from URL
+// https://stackoverflow.com/questions/8486099/how-do-i-parse-a-url-query-parameters-in-javascript
+function getJsonFromUrl(tp_url, tp_host, fp) {
+
+	var question = tp_url.indexOf("?");
+	var hash = tp_url.indexOf("#");
+	if (hash == -1 && question == -1) return {};
+
+	if (hash == -1) hash = tp_url.length;
+	var query = question == -1 || hash == question + 1 ? tp_url.substring(hash) :
+		tp_url.substring(question + 1, hash);
+	var result = {};
+	query.split("&").forEach(function (part) {
+		if (!part) return;
+		part = part.split("+").join(" "); // replace every + with space, regexp-free version
+		var eq = part.indexOf("=");
+		var key = eq > -1 ? part.substr(0, eq) : part;
+		var val = eq > -1 ? decodeURIComponent(part.substr(eq + 1)) : "";
+		var from = key.indexOf("[");
+		if (from == -1) {
+			result[decodeURIComponent(key)] = val;
+			// Create a map of value => tp => fp. This should match the structure for cookie_map;
+			if (!query_param_map[val]) query_param_map[val] = {}
+			if (!query_param_map[val][tp_host]) query_param_map[val][tp_host] = new Set();
+			query_param_map[val][tp_host].add(fp);
+		}
+		else {
+			var to = key.indexOf("]", from);
+			var index = decodeURIComponent(key.substring(from + 1, to));
+			key = decodeURIComponent(key.substring(0, from));
+			if (!result[key]) result[key] = [];
+			if (!index) result[key].push(val);
+			else result[key][index] = val;
+
+			// Create a map of value => tp => fp. This should match the structure for cookie_map;
+			if (!query_param_map[val]) query_param_map[val] = {}
+			if (!query_param_map[val][tp_host]) query_param_map[val][tp_host] = new Set();
+			query_param_map[val][tp_host].add(fp);
+
+		}
+	});
+	return result;
+}
+
+// Let's get the intersection between query_map and cookie_map
+STOP_WORDS = ['true', 'false', 'undefined'];
+
+function intersection(o1, o2) {
+	return Object.keys(o1).concat(Object.keys(o2)).sort().reduce(function (r, a, i, aa) {
+		if (i && aa[i - 1] === a && a.length > 4 && STOP_WORDS.indexOf(a) === -1) {
+			r.push(a);
+		}
+		return r;
+	}, []);
+}
+
+
+// Let's find values of interest.
+function cookie_synching() {
+	return intersection(query_param_map, cookie_map);
+}
+
+// Let's find values that can be used for tracking.
+STOP_WORDS = ['true', 'false', 'undefined', '2019', '19-'];
+
+function values_used_for_tracking() {
+	const values_for_tracking = new Set();
+	Object.keys(cookie_map).forEach(e => {
+		Object.keys(cookie_map[e]).forEach(y => {
+			const l = [...cookie_map[e][y]].length
+			if (l > 2 && e.length > 4 && e.indexOf('19-') === -1 && e.indexOf('2019') === -1) {
+				values_for_tracking.add(e);
+			}
+		});
+	});
+
+	Object.keys(query_param_map).forEach(e => {
+		Object.keys(query_param_map[e]).forEach(y => {
+			const l = [...query_param_map[e][y]].length
+			if (l > 2 && e.length > 4 && e.indexOf('19-') === -1 && e.indexOf('2019') === -1) {
+				values_for_tracking.add(e);
+			}
+		});
+	});
+	return [...values_for_tracking];
+}
+
+// Let's create company profiles.
+function company_wise_profile() {
+	const company_name = {};
+	Object.keys(refTP).forEach(url => {
+		const parsed = parseURL(url);
+		Object.keys(refTP[url]).forEach(company => {
+			if (Object.keys(company_name).indexOf(company) === -1) {
+				company_name[company] = new Set();
+			}
+			company_name[company].add(parsed.hostname);
+		})
+	});
+
+	const treeD3 = { "name": "Tracker Companies", "children": [] };
+	Object.keys(company_name).forEach(tp_company => {
+		const t = { "name": tp_company, "children": [] };
+		company_name[tp_company].forEach(website => {
+			t['children'].push({ "name": website, "size": 100 });
+		})
+		treeD3['children'].push(t);
+	})
+	return treeD3;
+}
 const debug = true;
 
 /// Comes from whitracks.me. We need to improve the mechanisms to update the lists.
@@ -30,8 +165,11 @@ const trackerData = { "Index Exchange": { "hosts": ["casalemedia.com", "indexww.
 const trackerDomains = [];
 const companyTree = {} // Should start company -> domain visited -> url -> HTML.
 const controlPanelURL = chrome.extension.getURL('templates/control-panel.html');
+const treeURL = chrome.extension.getURL('templates/company-tree.html');
 let recordingStatus = false;
 const contentScriptPath = 'scripts/content-script.js';
+const cookie_map = {};
+const query_param_map = {};
 
 // They are let and not const. as it helps in reloading them.
 let refTP = {};
@@ -493,12 +631,15 @@ function getReferrer(request) {
 
 function observeRequest(request) {
 	const tabID = request.tabId;
-	browser.tabs.get(tabID, (tabDetails) => {
 
-		if (tabDetails && !tabDetails.incognito) {
-			onSendHeadersListeners(request)
-		}
-	});
+	if (tabID > 0) {
+		browser.tabs.get(tabID, (tabDetails) => {
+			if (tabDetails && tabDetails.incognito) {
+				return;
+			}
+		});
+	}
+	onSendHeadersListeners(request);
 	/*
 	.then( tabDetails => {
 
@@ -544,8 +685,6 @@ function onSendHeadersListeners(request) {
 
 		const parsedURL = parseURL(request.url);
 		if (parsedURL && parsedInitiatorURL && parsedInitiatorURL.hostname !== parsedURL.hostname) {
-			console.log(request.url, request.type);
-			console.log(parsedURL, request.type);
 			const hostname = parsedURL.hostname;
 			const hostnameFP = parsedInitiatorURL.hostname;
 
@@ -616,18 +755,21 @@ function onSendHeadersListeners(request) {
 				addThirdPartyFP(decode(request.url), initiatorURL, companyDetailsTP, companyDetailsFP);
 				savetpList(decode(request.url));
 
+				// Let's parse the URL and add it to query_map.
+				getJsonFromUrl(request.url, partialHostName, partialHostNameFP);
+
 				// Let's keep track of the cookies too.
 				// Helps find cases like Facebook.
 				request.requestHeaders.forEach(header => {
 					if (header.name.toLowerCase() === 'cookie') {
-						cookieTable[decode(request.url)] = header.value;
-						saveCookies(decode(request.url), header.value);
+						const cookie_details = header.value;
+						cookieTable[decode(request.url)] = cookie_details;
+						saveCookies(decode(request.url), cookie_details);
+						cookie_parser(cookie_details, partialHostNameFP, partialHostName);
 					}
 				});
-			} else {
-				console.log(">> Companies are same >>> " + companyDetailsTP.company_name + ' >>>> ' + companyDetailsFP.company_name)
-			}
 
+			}
 			//}
 		}
 	} catch (ee) {
@@ -636,9 +778,8 @@ function onSendHeadersListeners(request) {
 }
 
 function onMessageListener(info, sender, sendResponse) {
-
 	// Only receive messages from control-panel.
-	if (sender.url === controlPanelURL) {
+	if (sender.url === controlPanelURL || sender.url === treeURL) {
 
 		// Is it a recording signal.?
 		if (info.type === 'recording') {
@@ -676,11 +817,24 @@ function onMessageListener(info, sender, sendResponse) {
 		if (info.type === 'cleanStorage') {
 			cleanStorage();
 		}
+
+		// Check for tracking values.
+		if (info.type === 'checkTrackingValues') {
+			sendResponse({
+				response: values_used_for_tracking()
+			});
+		}
+
+		// Check for tracking values.
+		if (info.type === 'checkCompanyProfiles') {
+			sendResponse({
+				response: company_wise_profile()
+			});
+		}
 	}
 
 
 	// Get input fields. PLEASE CHECK IF THIS IS A SAFE WAY. This could be exploited by websites.
-	console.log(sender);
 	if (info.type === 'inputFields') {
 
 		// Content scripts return "" at times.
@@ -754,7 +908,11 @@ setInterval(purgeInputFieldsCache, 2000);
 // CHROME EXTENSION APIs.
 
 // Need to listen to onSendHeaders.
-chrome.webRequest.onSendHeaders.addListener(observeRequest, { urls: ["<all_urls>"] }, ['requestHeaders', 'extraHeaders']);
+try {
+	chrome.webRequest.onSendHeaders.addListener(observeRequest, { urls: ["<all_urls>"] }, ['requestHeaders', 'extraHeaders']);
+} catch (ee) {
+	chrome.webRequest.onSendHeaders.addListener(observeRequest, { urls: ["<all_urls>"] }, ['requestHeaders']);
+}
 
 // chrome.webRequest.onCompleted.addListener(console.log)
 // Need to open the control-panel.
