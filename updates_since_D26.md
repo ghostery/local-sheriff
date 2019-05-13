@@ -17,10 +17,10 @@
         To check what values are being used to track the user, simply click the option "Click to check: Datapoints that are being used to track me across domains? ".
         
         This is will list the values that can be used for tracking you.
-        [Identifiers that can track you](docs/images/tracking_a.png)
+        ![Identifiers that can track you](docs/images/tracking-identifiers-1.png)
         
         Once you click the value, it will share which tracker uses's this value and which all websites can that track.
-        [Detailed logs of how where they can track you](docs/images/trackiing_id_1.png)
+        ![Detailed logs of how where they can track you](docs/images/trackiing-identifiers-2.png)
         
         
     2. Company wise profile.
