@@ -10,7 +10,7 @@
   "description" : "Local sheriff is a reconnaissance tool in your browser for your data.",
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';",
   "icons": {
-    "256": "icons/sheriff.png"
+    "128": "icons/sheriff.png"
   },
   "browser_action": {
     "default_icon": "icons/sheriff-128x128.png"
