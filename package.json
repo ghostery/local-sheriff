@@ -8,7 +8,7 @@
     "watch": "rollup --config rollup.config.js --watch",
     "prestart": "npm run clean",
     "lint": "web-ext lint",
-    "start": "concurrently 'npm run watch' 'web-ext run --source-dir . --firefox /usr/bin/firefox'",
+    "start": "concurrently 'npm run watch' 'web-ext run --source-dir .'",
     "update-wtm": "curl 'https://whotracks.me/data/trackerdb.json' > whotracksme.json",
     "prestart": "npm run clean"
   },
