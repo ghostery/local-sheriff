@@ -2,10 +2,14 @@
   "description": "Local sheriff is a reconnaissance tool in your browser for your data.",
   "main": "background.js",
   "scripts": {
-    "build": "rollup --config rollup.config.js",
+    "clean": "rm -frv dist",
+    "build": "rollup --config rollup.config.js --environment BUILD:production",
+    "prestart": "npm run clean",
     "watch": "rollup --config rollup.config.js --watch",
+    "prestart": "npm run clean",
     "lint": "web-ext lint",
-    "start": "concurrently 'npm run watch' 'web-ext run --source-dir . --firefox /usr/bin/firefox'"
+    "start": "concurrently 'npm run watch' 'web-ext run --source-dir . --firefox /usr/bin/firefox'",
+    "prestart": "npm run clean"
   },
   "repository": {
     "type": "git",
