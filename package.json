@@ -2,7 +2,10 @@
   "description": "Local sheriff is a reconnaissance tool in your browser for your data.",
   "main": "background.js",
   "scripts": {
-    "build": "echo TODO"
+    "build": "rollup --config rollup.config.js",
+    "watch": "rollup --config rollup.config.js --watch",
+    "lint": "web-ext lint",
+    "start": "concurrently 'npm run watch' 'web-ext run --source-dir . --firefox /usr/bin/firefox'"
   },
   "repository": {
     "type": "git",
@@ -24,5 +27,13 @@
   "homepage": "https://github.com/cliqz-oss/local-sheriff#readme",
   "dependencies": {
     "dexie": "^2.0.4"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "rollup": "^1.15.6",
+    "rollup-plugin-commonjs": "^10.0.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.0.3",
+    "web-ext": "^3.0.0"
   }
 }

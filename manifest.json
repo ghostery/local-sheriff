@@ -17,12 +17,12 @@
   },
   "permissions": [ "http://*/*", "https://*/*","tabs", "activeTab", "webRequest", "webRequestBlocking","unlimitedStorage", "webNavigation", "<all_urls>"],
   "background": {
-    "scripts": ["static/js/dexie.js", "database.js", "background.js"]
+    "scripts": ["background.bundle.js"]
   },
   "content_scripts": [{
     "matches" : ["http://*/*", "https://*/*"],
     "match_about_blank": true,
-    "js": ["scripts/content-script.js"],
+    "js": ["content-script.bundle.js"],
     "all_frames": true,
     "run_at": "document_end"
   }],
