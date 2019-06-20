@@ -1,6 +1,7 @@
 import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 import json from 'rollup-plugin-json';
+import compiler from '@ampproject/rollup-plugin-closure-compiler';
 
 const plugins = [
 	json(),
@@ -8,6 +9,7 @@ const plugins = [
 		preferBuiltins: false,
 	}),
 	commonjs(),
+	compiler(),
 ];
 
 export default [
@@ -17,6 +19,7 @@ export default [
 			file: 'background.bundle.js',
 			format: 'iife',
 			name: 'localSheriff',
+			sourcemap: true,
 		},
 		plugins,
 	},
@@ -26,6 +29,7 @@ export default [
 			file: 'content-script.bundle.js',
 			format: 'iife',
 			name: 'localSheriff',
+			sourcemap: true,
 		},
 		plugins,
 	},

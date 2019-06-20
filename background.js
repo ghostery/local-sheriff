@@ -604,7 +604,6 @@ function getCompanyName(hostname, partialHostName) {
 
 	return {
 		company_name: 'Unknown',
-		tracker_host: 'Unknown',
 		tracker_id: 'Unknown',
 		tracker_host: hostname
 	};

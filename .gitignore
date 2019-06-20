@@ -1,3 +1,5 @@
 node_modules/
 background.bundle.js
+background.bundle.js.map
 content-script.bundle.js
+content-script.bundle.js.map
