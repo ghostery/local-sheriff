@@ -9,6 +9,7 @@
     "prestart": "npm run clean",
     "lint": "web-ext lint",
     "start": "concurrently 'npm run watch' 'web-ext run --source-dir . --firefox /usr/bin/firefox'",
+    "update-wtm": "curl 'https://whotracks.me/data/trackerdb.json' > whotracksme.json",
     "prestart": "npm run clean"
   },
   "repository": {

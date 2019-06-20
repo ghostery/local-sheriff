@@ -231,7 +231,6 @@ function search(query, t) {
 
 
   chrome.runtime.sendMessage(additionalInfo, e => {
-
     // console.log(e.response);
     // console.log(getWebsitesCount(e.response));
     let countCompanies = e.response.ls.companies.length; // Placeholder.

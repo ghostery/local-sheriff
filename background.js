@@ -191,19 +191,14 @@ let cookieTable = {};
 
 const parentTabMapping = {};
 
-Object.keys(trackerData).forEach(e => {
-	trackerData[e].hosts.forEach(y => {
-		trackerDomains.push(y);
-	});
-});
-
-
 // Create a mapping of hostname to company name
 const company_hostname_mapping = {}
 
-Object.keys(trackerData).forEach(e => {
-	trackerData[e].hosts.forEach(y => {
-		company_hostname_mapping[y] = trackerData[e].parent;
+Object.values(trackerData.trackers).forEach((info) => {
+	const company_name = info.company_id === null ? 'Unknown' : trackerData.companies[info.company_id].name;
+	info.domains.forEach(y => {
+		trackerDomains.push(y);
+		company_hostname_mapping[y] = company_name;
 	});
 });
 
