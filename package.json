@@ -1,0 +1,25 @@
+{
+	"description": "Local sheriff is a reconnaissance tool in your browser for your data.",
+	"main": "background.js",
+	"scripts": {
+	"build": "echo TODO"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/cliqz-oss/local-sheriff.git"
+	},
+	"keywords": [
+		"privacy-tools",
+		"gdpr-checklist",
+		"web-extension",
+		"owasp-top-10",
+		"data-leakage",
+		"sensitive-data-exposure"
+	],
+	"author": "modi.konark@gmail.com",
+	"license": "GPL-3.0",
+	"bugs": {
+		"url": "https://github.com/cliqz-oss/local-sheriff/issues"
+	},
+	"homepage": "https://github.com/cliqz-oss/local-sheriff#readme"
+}
