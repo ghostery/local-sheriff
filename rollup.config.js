@@ -1,4 +1,3 @@
-import commonjs from 'rollup-plugin-commonjs';
 import resolve from 'rollup-plugin-node-resolve';
 import json from 'rollup-plugin-json';
 import compiler from '@ampproject/rollup-plugin-closure-compiler';
@@ -10,7 +9,6 @@ const plugins = [
 	resolve({
 		preferBuiltins: false,
 	}),
-	commonjs(),
 ];
 
 if (mode === 'production') {
