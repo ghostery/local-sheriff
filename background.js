@@ -1,5 +1,5 @@
 import { chrome, browser } from './globals';
-import trackerData from './whotracksme.json';
+import companyHostnameMapping from './whotracksme.json';
 import {
 	cleanStorage,
 	saveCookies,
@@ -190,17 +190,6 @@ let cookieTable = {};
 // How is parent url defined? when we observe a main_frame request.
 
 const parentTabMapping = {};
-
-// Create a mapping of hostname to company name
-const company_hostname_mapping = {}
-
-Object.values(trackerData.trackers).forEach((info) => {
-	const company_name = info.company_id === null ? 'Unknown' : trackerData.companies[info.company_id].name;
-	info.domains.forEach(y => {
-		trackerDomains.push(y);
-		company_hostname_mapping[y] = company_name;
-	});
-});
 
 // Adding company name and tracker host.
 // Structure is:
@@ -588,9 +577,9 @@ function parseQueryString(q) {
 }
 
 function getCompanyName(hostname, partialHostName) {
-	if (company_hostname_mapping.hasOwnProperty(hostname) || company_hostname_mapping.hasOwnProperty(partialHostName)) {
+	if (companyHostnameMapping.hasOwnProperty(hostname) || companyHostnameMapping.hasOwnProperty(partialHostName)) {
 		return {
-			company_name: company_hostname_mapping[hostname] || company_hostname_mapping[partialHostName],
+			company_name: companyHostnameMapping[hostname] || companyHostnameMapping[partialHostName],
 			// tracker_company: e,
 			// tracker_id: trackerData[e].id,
 			tracker_host: hostname

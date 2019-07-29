@@ -8,7 +8,7 @@
     "watch": "rollup --config rollup.config.js --watch",
     "lint": "web-ext lint",
     "start": "concurrently 'npm run watch' 'web-ext run --source-dir .'",
-    "update-wtm": "curl 'https://whotracks.me/data/trackerdb.json' > whotracksme.json"
+    "update-wtm": "node updater.js"
   },
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@ampproject/rollup-plugin-closure-compiler": "^0.10.0",
+    "axios": "^0.19.0",
     "concurrently": "^4.1.1",
     "rollup": "^1.17.0",
     "rollup-plugin-json": "^4.0.0",
