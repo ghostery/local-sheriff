@@ -1,3 +1,5 @@
+import Dexie from 'dexie';
+
 // Wrapper using Dexie.js to use IndexedDB.
 const updateTime = 1 * 60 * 1000;
 
@@ -54,31 +56,31 @@ function load(obj, key) {
 	});
 }
 
-function saveInDB(ref, tp) {
+export function saveInDB(ref, tp) {
 	db.reftp.add({ ref: ref, tp: tp });
 }
 
-function saveHTML(ref, html) {
+export function saveHTML(ref, html) {
 	db.refhtml.add({ ref: ref, html: html });
 }
 
-function savetpList(tpurl) {
+export function savetpList(tpurl) {
 	db.tpurl.add({ tpurl: tpurl });
 }
 
-function saveInputFields(value, sender, details) {
+export function saveInputFields(value, sender, details) {
 	db.inputFields.add({ value: value, sender: sender, details: details });
 }
 
-function saveInputFieldsCache(value, summary) {
+export function saveInputFieldsCache(value, summary) {
 	db.inputFieldsCache.add({ value: value, summary: summary });
 }
 
-function savetpURLFP(tpurl, details) {
+export function savetpURLFP(tpurl, details) {
 	db.tpURLFP.add({ tpurl: tpurl, details: details });
 }
 
-function saveCookies(url, details) {
+export function saveCookies(url, details) {
 	dbCookie.cookietable.add({ url: url, details: details });
 }
 
@@ -139,7 +141,7 @@ function cleanCookieDB() {
 	});
 }
 
-function cleanStorage() {
+export function cleanStorage() {
 
 	// Clean databases and then re-load the extension.
 

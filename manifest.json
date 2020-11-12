@@ -10,23 +10,21 @@
   "description" : "Local sheriff is a reconnaissance tool in your browser for your data.",
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';",
   "icons": {
-    "256": "icons/sheriff.png"
+    "128": "icons/sheriff.png"
   },
   "browser_action": {
     "default_icon": "icons/sheriff-128x128.png"
   },
   "permissions": [ "http://*/*", "https://*/*","tabs", "activeTab", "webRequest", "webRequestBlocking","unlimitedStorage", "webNavigation", "<all_urls>"],
   "background": {
-    "scripts": ["static/js/dexie.js", "database.js", "background.js"]
+    "scripts": ["./dist/background.bundle.js"]
   },
   "content_scripts": [{
     "matches" : ["http://*/*", "https://*/*"],
     "match_about_blank": true,
-    "js": ["scripts/content-script.js"],
+    "js": ["./dist/content-script.bundle.js"],
     "all_frames": true,
     "run_at": "document_end"
   }],
   "manifest_version": 2
 }
-
-

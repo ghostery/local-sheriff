@@ -1,0 +1,43 @@
+{
+  "description": "Local sheriff is a reconnaissance tool in your browser for your data.",
+  "main": "background.js",
+  "scripts": {
+    "clean": "rm -frv dist",
+    "build": "rollup --config rollup.config.js --environment BUILD:production",
+    "prestart": "npm run clean",
+    "watch": "rollup --config rollup.config.js --watch",
+    "lint": "web-ext lint",
+    "start": "concurrently 'npm run watch' 'web-ext run --source-dir .'",
+    "update-wtm": "node updater.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cliqz-oss/local-sheriff.git"
+  },
+  "keywords": [
+    "privacy-tools",
+    "gdpr-checklist",
+    "web-extension",
+    "owasp-top-10",
+    "data-leakage",
+    "sensitive-data-exposure"
+  ],
+  "author": "modi.konark@gmail.com",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/cliqz-oss/local-sheriff/issues"
+  },
+  "homepage": "https://github.com/cliqz-oss/local-sheriff#readme",
+  "dependencies": {
+    "dexie": "^2.0.4"
+  },
+  "devDependencies": {
+    "@ampproject/rollup-plugin-closure-compiler": "^0.10.0",
+    "axios": "^0.19.0",
+    "concurrently": "^4.1.1",
+    "rollup": "^1.17.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "web-ext": "^3.1.1"
+  }
+}
